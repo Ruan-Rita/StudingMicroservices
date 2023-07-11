@@ -1,6 +1,7 @@
 'use client'
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Post from "../component/Post";
 
 export default function Home() {
   const [title, setTitle] = useState('')
@@ -12,11 +13,13 @@ export default function Home() {
 
   function getPosts() {
     axios.get('http://127.0.0.1:4000/posts').then(function (response: any) {
+
       setPosts(response.data);
     }).catch(function (error: Error) {
       console.log(error);
     });
   }
+
   function onSubmit() {
     console.log('Fez request !!');
 
@@ -52,9 +55,7 @@ export default function Home() {
               <h2 className="text-orange-500 text-lg mb-4">Posts</h2>
               <div className="border border-cyan-300 p-1 flex-1 rounded-md">
                 {posts.map((post: any) => (
-                  <div className="bg-orange-100 px-2 h-20 mt-2 rounded-lg py-1 text-gray-600 font-semibold" key={post.id}>
-                    <h1>{post.title}</h1>
-                  </div>
+                  <Post id={post.id} title={post.title} key={post.id} />
                 ))}
               </div>
             </div>
