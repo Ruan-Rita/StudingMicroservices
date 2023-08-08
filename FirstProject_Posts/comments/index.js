@@ -3,7 +3,7 @@ const { randomBytes } = require('crypto')
 const bodyParser = require('body-parser')
 const app = express()
 const cors = require('cors')
-const { default: axios } = require('axios')
+const axios = require('axios')
 // settings
 app.use(bodyParser.json())
 app.use(cors())
@@ -33,9 +33,9 @@ app.post('/posts/:id/comments', async function (req, res) {
             postId: req.params.id,
             id
         }
-    })
+    }).catch(e => console.log(e.message))
 
-    return res.status(201).send(newComment)
+    res.status(201).send(newComment)
 })
 
 app.post('/events', function (req, res) {

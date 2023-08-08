@@ -5,15 +5,19 @@ import Post from "../component/Post";
 
 export default function Home() {
   const [title, setTitle] = useState('')
-  const [posts, setPosts] = useState([] as any)
+  const [posts, setPosts] = useState({} as any)
 
   useEffect(() => {
     getPosts()
   }, [])
 
   function getPosts() {
-    axios.get('http://127.0.0.1:4000/posts').then(function (response: any) {
+    axios.get('http://127.0.0.1:4002/posts').then(function (response: any) {
+      console.log('O que estamos pegando: ', response);
+      Object.values(response.data).map(item => {
+        console.log('TESTE', item);
 
+      })
       setPosts(response.data);
     }).catch(function (error: Error) {
       console.log(error);
@@ -26,10 +30,7 @@ export default function Home() {
     axios.post('http://127.0.0.1:4000/posts', {
       title,
     }).then(function (response: any) {
-      setPosts([
-        ...posts,
-        response.data
-      ])
+      getPosts()
       setTitle('')
       console.log(response);
     }).catch(function (error: Error) {
@@ -54,8 +55,23 @@ export default function Home() {
             <div className="flex-1 flex flex-col">
               <h2 className="text-orange-500 text-lg mb-4">Posts</h2>
               <div className="border border-cyan-300 p-1 flex-1 rounded-md">
-                {posts.map((post: any) => (
-                  <Post id={post.id} title={post.title} key={post.id} />
+                {Object.values(posts).map((post: any) => (
+                  <Post
+                    id={post.id}
+                    title={post.title}
+                    key={post.id}
+                    comments={post.comments}
+                    onComment={newComment => {
+                      const { id, comments } = posts[post.id]
+                      comments[Object.values(comments).length + 1] = { content: newComment }
+                      setPosts({
+                        ...posts,
+                        [id]: {
+                          ...posts[post.id],
+                          comments
+                        },
+                      })
+                    }} />
                 ))}
               </div>
             </div>
