@@ -23,6 +23,14 @@ export default function Post({ title, id, comments, onComment }: IPost) {
         });
     }
 
+    function renderCommentContent(comment: any) {
+        console.log('Comment: ', comment);
+
+        if (comment.status === 'approved') return comment.content
+        else if (comment.status === 'rejected') return "This comment has been rejected!"
+        else return "This comment is awaiting moderation"
+    }
+
     return (
         <div className="bg-orange-100 px-2 mt-2 rounded-lg py-1 text-gray-600 font-semibold">
             <h1>{title}</h1>
@@ -33,7 +41,7 @@ export default function Post({ title, id, comments, onComment }: IPost) {
             </div>
             <div className="text-right">
                 {comments.map((comment: any) => (
-                    <p id={comment.id} className="text-pink-300">{comment.content}</p>
+                    <p id={comment.id} className="text-pink-300">{renderCommentContent(comment)}</p>
                 ))}
             </div>
         </div>
