@@ -41,5 +41,6 @@ app.post('/events', function (req, res) {
 
 // start application
 app.listen(4000, function () {
+    console.log('Version: v20');
     console.log('Listening on 4000');
 })
