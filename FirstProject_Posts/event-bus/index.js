@@ -11,10 +11,10 @@ app.post('/events', function (req, res) {
     const event = req.body
     events.push(event)
 
-    axios.post('http://127.0.0.1:4000/events', event).catch(e => console.log("[post]" + e.message))
-    axios.post('http://127.0.0.1:4001/events', event).catch(e => console.log("[comment]" + e.message))
-    axios.post('http://127.0.0.1:4002/events', event).catch(e => console.log("[query]" + e.message))
-    axios.post('http://127.0.0.1:4003/events', event).catch(e => console.log("[moderation]" + e.message))
+    axios.post('http://posts-clusterip-srv:4000/events', event).catch(e => console.log("[post]" + e.message))
+    // axios.post('http://127.0.0.1:4001/events', event).catch(e => console.log("[comment]" + e.message))
+    // axios.post('http://127.0.0.1:4002/events', event).catch(e => console.log("[query]" + e.message))
+    // axios.post('http://127.0.0.1:4003/events', event).catch(e => console.log("[moderation]" + e.message))
 
     res.send({
         status: 'OK'
