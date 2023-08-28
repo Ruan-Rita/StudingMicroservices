@@ -12,7 +12,7 @@ export default function Home() {
   }, [])
 
   function getPosts() {
-    axios.get('http://127.0.0.1:4002/posts').then(function (response: any) {
+    axios.get('http://posts.com/posts').then(function (response: any) {
       console.log('O que estamos pegando: ', response);
       Object.values(response.data).map(item => {
         console.log('TESTE', item);
@@ -27,7 +27,7 @@ export default function Home() {
   function onSubmit() {
     console.log('Fez request !!');
 
-    axios.post('http://127.0.0.1:4000/posts', {
+    axios.post('http://posts.com/posts/create', {
       title,
     }).then(function (response: any) {
       getPosts()

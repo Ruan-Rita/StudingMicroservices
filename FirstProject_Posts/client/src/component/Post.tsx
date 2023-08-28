@@ -12,7 +12,7 @@ export default function Post({ title, id, comments, onComment }: IPost) {
     const [newComment, setNewComment] = useState('')
 
     function handleComment() {
-        axios.post('http://127.0.0.1:4001/posts/' + id + '/comments', {
+        axios.post('http://posts.com/posts/' + id + '/comments', {
             content: newComment,
         }).then(function (response: any) {
             onComment(newComment)
