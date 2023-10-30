@@ -7,19 +7,16 @@ metadata:
     nginx.kubernetes.io/use-regex: 'true'
 spec:
   rules:
-    # - host: posts.com
-    #   http: 
-    #     paths: 
-    #       - path: /posts/create
-    #         pathType: Prefix
-    #         backend:
-    #           service: 
-    #             name: posts-clusterip-srv
-    #             port: 
-    #               number: 4000
     - host: posts.com
       http: 
         paths: 
+          - path: /posts/create
+            pathType: Prefix
+            backend:
+              service: 
+                name: posts-clusterip-srv
+                port: 
+                  number: 4000
           - path: /posts
             pathType: Prefix
             backend:
