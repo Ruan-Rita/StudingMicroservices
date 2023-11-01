@@ -9,10 +9,10 @@ build:
     push: false
   artifacts:
     - image: ruanritah/ticketing-auth
-    context: auth
-    docker:
-      dockerfile: Dockerfile
-    sync:
-      manual:
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
         - src: 'src/**/*.ts'
-        dest: .
+          dest: .

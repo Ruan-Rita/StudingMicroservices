@@ -5,7 +5,7 @@ metadata:
 spec:
   replicas: 1
   selector: 
-    matchlabels: 
+    matchLabels: 
       app: auth
   template:
     metadata:
@@ -14,12 +14,10 @@ spec:
     spec: 
       containers:
         - name: auth
-        image: ruanritah/ticketing-auth
-
+          image: ruanritah/ticketing-auth
 ---
-
 apiVersion: v1
-kind: service
+kind: Service
 metadata: 
   name: auth-srv
 spec: 
@@ -27,6 +25,6 @@ spec:
     app: auth
   ports: 
     - name: auth
-    protocol: TCP
-    port: 3000
-    targetPort: 3000
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

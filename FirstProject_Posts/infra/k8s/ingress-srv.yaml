@@ -10,24 +10,24 @@ spec:
     - host: posts.com
       http: 
         paths: 
-          - path: /posts/create
+          - path: /posts
             pathType: Prefix
             backend:
               service: 
                 name: posts-clusterip-srv
                 port: 
                   number: 4000
-          - path: /posts
-            pathType: Prefix
-            backend:
-              service: 
-                name: query-srv
-                port: 
-                  number: 4002
+    #       - path: /posts-s
+    #         pathType: Prefix
+    #         backend:
+    #           service: 
+    #             name: query-srv
+    #             port: 
+    #               number: 4002
     # - host: posts.com
     #   http: 
     #     paths: 
-    #       - path: /posts
+    #       - path: /posts/sa
     #         pathType: Prefix
     #         backend:
     #           service: 
