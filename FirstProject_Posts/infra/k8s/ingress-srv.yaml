@@ -1,50 +1,47 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
-metadata: 
+metadata:
   name: ingress-srv
   annotations:
     kubernetes.io/ingress.class: nginx
-    nginx.kubernetes.io/use-regex: 'true'
+    nginx.kubernetes.io/use-regex: "true"
 spec:
   rules:
     - host: posts.com
-      http: 
-        paths: 
+      http:
+        paths:
           - path: /posts
             pathType: Prefix
             backend:
-              service: 
+              service:
                 name: posts-clusterip-srv
-                port: 
+                port:
                   number: 4000
-    #       - path: /posts-s
-    #         pathType: Prefix
-    #         backend:
-    #           service: 
-    #             name: query-srv
-    #             port: 
-    #               number: 4002
-    # - host: posts.com
-    #   http: 
-    #     paths: 
-    #       - path: /posts/sa
-    #         pathType: Prefix
-    #         backend:
-    #           service: 
-    #             name: query-srv 
-    #             port: 
-    #               number: 4002
-    #       - path: /posts/?(.*)/comments
-    #         pathType: ImplementationSpecific
-    #         backend:
-    #           service: 
-    #             name: comments-srv 
-    #             port: 
-    #               number: 4001
-    #       - path: /
-    #         pathType: ImplementationSpecific
-    #         backend:
-    #           service: 
-    #             name: client-srv
-    #             port: 
-    #               number: 3000
+          - path: /posts-s
+            pathType: Prefix
+            backend:
+              service:
+                name: query-srv
+                port:
+                  number: 4002
+          - path: /posts/sa
+            pathType: Prefix
+            backend:
+              service:
+                name: query-srv
+                port:
+                  number: 4002
+          - path: /posts/?(.*)/comments
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: comments-srv
+                port:
+                  number: 4001
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: client-srv
+                port:
+                  number: 3000

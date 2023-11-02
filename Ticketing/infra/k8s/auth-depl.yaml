@@ -1,29 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
-metadata: 
+metadata:
   name: auth-depl
 spec:
   replicas: 1
-  selector: 
-    matchLabels: 
+  selector:
+    matchLabels:
       app: auth
   template:
     metadata:
       labels:
         app: auth
-    spec: 
+    spec:
       containers:
         - name: auth
           image: ruanritah/ticketing-auth
+          ports:
+            - containerPort: 3000
+              protocol: TCP
 ---
 apiVersion: v1
 kind: Service
-metadata: 
+metadata:
   name: auth-srv
-spec: 
+spec:
+  # type: NodePort
   selector:
     app: auth
-  ports: 
+  ports:
     - name: auth
       protocol: TCP
       port: 3000
