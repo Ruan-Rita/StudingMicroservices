@@ -5,14 +5,14 @@ metadata:
 spec:
   replicas: 1
   selector:
-    matchLabels: 
+    matchLabels:
       app: query
-  template: 
-    metadata: 
-      labels: 
+  template:
+    metadata:
+      labels:
         app: query
     spec:
-      containers: 
+      containers:
         - name: query
           image: ruanritah/query
 ---
@@ -28,5 +28,3 @@ spec:
       protocol: TCP
       port: 4002
       targetPort: 4002
-
-    

@@ -21,11 +21,11 @@ kind: Service
 metadata:
   name: client-srv
 spec:
-  selector: 
+  type: NodePort
+  selector:
     name: client # matchLabels of my pod in my deployment
   ports:
     - name: client
       protocol: TCP
       port: 3000
       targetPort: 3000
-  

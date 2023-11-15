@@ -10,7 +10,7 @@ spec:
     - host: ticketing.test
       http:
         paths:
-          - path: /api/users/currentuser
+          - path: /api/user/?(.*)
             pathType: Prefix
             backend:
               service:
