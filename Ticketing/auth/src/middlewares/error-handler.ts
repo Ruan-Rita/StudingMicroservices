@@ -1,0 +1,6 @@
+import { NextFunction, Request, Response } from "express";
+
+export function errorHandler(error: Error, request: Request, response: Response, next: NextFunction) {
+    console.log('Something went wrong', error)
+    response.status(400).send({ message: 'Something went wrong' });
+}
