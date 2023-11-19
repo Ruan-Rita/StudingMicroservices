@@ -6,6 +6,7 @@ import { signoutRoutes } from "./routes/signout";
 import { signupRoutes } from "./routes/signup";
 import { errorHandler } from "./middlewares/error-handler";
 import { NotFoundError } from "./errors/not-found-error";
+import cookieSession from "cookie-session";
 import 'express-async-errors'
 import mongoose from "mongoose";
 
@@ -16,6 +17,11 @@ app.use(currentUserRoutes)
 app.use(signinRoutes)
 app.use(signoutRoutes)
 app.use(signupRoutes)
+app.set('trust proxy', true) // ingress engine x
+app.use(cookieSession({
+    signed: false,
+    secure: true
+}))
 
 app.all('*', async () => {
     throw new NotFoundError()
