@@ -4,7 +4,7 @@ export class BadRequestError extends CustomError {
     statusCode = 400
 
     constructor(public message: string) {
-        super('Error connecting to database')
+        super(message)
         // 
         Object.setPrototypeOf(this, BadRequestError.prototype)
     }

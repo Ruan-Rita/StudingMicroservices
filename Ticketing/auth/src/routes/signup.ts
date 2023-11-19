@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
+import jwt from "jsonwebtoken";
 import { BadRequestError } from "../errors/bad-request-error";
 import { DatabaseConnectionError } from "../errors/database-connection-error";
 import { RequestValidationError } from "../errors/request-validation-error";
@@ -23,6 +24,20 @@ router.post(`/api/user/signup`, [
 
     const user = User.build({ email, password })
     await user.save()
+
+    // Generate jwt
+    const userJwt = jwt.sign({
+        id: user.id,
+        email: user.email,
+    }, 'Without-token')
+
+    console.log(' user token', userJwt);
+
+    // store in the session
+    req.session = {
+        jwt: userJwt
+    }
+
     return res.status(201).json(user)
 
 })

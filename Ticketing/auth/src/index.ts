@@ -11,17 +11,18 @@ import 'express-async-errors'
 import mongoose from "mongoose";
 
 const app = express()
+app.set('trust proxy', true) // ingress engine x
+app.use(cookieSession({
+    signed: false,
+    secure: true
+}))
+
 app.use(json())
 
 app.use(currentUserRoutes)
 app.use(signinRoutes)
 app.use(signoutRoutes)
 app.use(signupRoutes)
-app.set('trust proxy', true) // ingress engine x
-app.use(cookieSession({
-    signed: false,
-    secure: true
-}))
 
 app.all('*', async () => {
     throw new NotFoundError()
