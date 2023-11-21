@@ -27,9 +27,6 @@ router.post(`/api/user/signup`, [
         email: user.email,
     }, process.env.JWT_KEY!)
 
-    console.log(' user token', userJwt);
-    console.log(' process.env.JWT_KEY', process.env.JWT_KEY);
-
     // store in the session
     req.session = {
         jwt: userJwt

@@ -1,7 +1,10 @@
 import express, { Request, Response } from "express";
-import { body, validationResult } from "express-validator";
-import { RequestValidationError } from "../errors/request-validation-error";
+import { body } from "express-validator";
+import { BadRequestError } from "../errors/bad-request-error";
 import { validateRequest } from "../middlewares/validate-request";
+import { User } from "../models/user";
+import { Password } from "../services/password-service";
+import jwt from 'jsonwebtoken'
 
 const router = express.Router();
 router.post(`/api/user/signin`,
@@ -13,7 +16,26 @@ router.post(`/api/user/signin`,
     ], validateRequest, async (req: Request, res: Response) => {
         const { email, password } = req.body
 
-        res.send({})
+        const user = await User.findOne({ email })
+        if (!user) {
+            throw new BadRequestError('Invalid credentials!')
+        }
+        if (!Password.compare(user.password, password)) {
+            throw new BadRequestError('Invalid credentials!')
+        }
+
+        // Generate jwt
+        const userJwt = jwt.sign({
+            id: user.id,
+            email: user.email,
+        }, process.env.JWT_KEY!)
+
+        // store in the session
+        req.session = {
+            jwt: userJwt
+        }
+
+        return res.status(200).json(user)
     })
 
 export { router as signinRoutes }
