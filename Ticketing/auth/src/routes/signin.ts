@@ -1,22 +1,19 @@
 import express, { Request, Response } from "express";
-import { body } from "express-validator";
+import { body, validationResult } from "express-validator";
+import { RequestValidationError } from "../errors/request-validation-error";
+import { validateRequest } from "../middlewares/validate-request";
 
 const router = express.Router();
-router.get(`/api/user/signin`,
+router.post(`/api/user/signin`,
     [
         body('email')
             .isEmail()
             .withMessage('Must be email valid'),
         body('password').trim().notEmpty().withMessage('Password must be provided')
-    ], (req: Request, res: Response) => {
-        res.json({
-            data: {
-                name: {
-                    first: "ruan",
-                    last: "rita"
-                }
-            }
-        })
+    ], validateRequest, async (req: Request, res: Response) => {
+        const { email, password } = req.body
+
+        res.send({})
     })
 
 export { router as signinRoutes }

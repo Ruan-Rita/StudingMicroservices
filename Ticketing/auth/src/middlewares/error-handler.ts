@@ -7,5 +7,5 @@ export function errorHandler(error: Error, request: Request, response: Response,
         return response.status(error.statusCode).json({ errors: error.serializeErrors() })
     }
 
-    return response.status(400).send({ errors: [{ message: 'Something went wrong' }] });
+    response.status(400).send({ errors: [{ message: 'Something went wrong' }] });
 }
