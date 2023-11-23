@@ -9,6 +9,15 @@ import { errorHandler } from "./middlewares/error-handler";
 import { NotFoundError } from "./errors/not-found-error";
 import cookieSession from "cookie-session";
 import mongoose from "mongoose";
+import { UserPayload } from "./middlewares/current-user";
+
+declare global {
+    namespace Express {
+        interface Request {
+            currentUser?: UserPayload
+        }
+    }
+}
 
 const app = express()
 app.set('trust proxy', true) // ingress engine x
