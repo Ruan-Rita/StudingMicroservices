@@ -20,7 +20,7 @@ router.post(`/api/user/signin`,
         if (!user) {
             throw new BadRequestError('Invalid credentials!')
         }
-        if (!Password.compare(user.password, password)) {
+        if (!await Password.compare(user.password, password)) {
             throw new BadRequestError('Invalid credentials!')
         }
 
