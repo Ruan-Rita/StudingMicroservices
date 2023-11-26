@@ -1,7 +1,27 @@
+import request from 'supertest';
 import { MongoMemoryServer } from 'mongodb-memory-server'
 import mongoose from 'mongoose';
+import app from '../app';
+import e from 'express';
 
 let mongo: any
+
+declare global {
+    var signin: () => Promise<string[]>;
+}
+
+global.signin = async () => {
+    const email = 'ruan@email.com'
+    const password = 'ruan123'
+
+    const response = await request(app)
+        .post('/api/user/signup')
+        .send({ email, password })
+        .expect(201)
+
+    const cookie = response.get('Set-Cookie')
+    return cookie
+}
 
 beforeAll(async () => {
     process.env.JWT_KEY = 'Some_data'
