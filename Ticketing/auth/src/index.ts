@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import app from "./app";
 
 const startUp = async () => {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
     try {
         if (!process.env.JWT_KEY) {
             throw new Error('JWT_KEY must be defined')
