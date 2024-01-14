@@ -1,9 +1,10 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import { Asap } from 'next/font/google'
+import axios from 'axios'
+const inter = Asap({ subsets: ['latin'] })
 
-const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+
+const Home = function ({ }: any) {
   return (
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
@@ -12,3 +13,17 @@ export default function Home() {
     </main>
   )
 }
+
+Home.getInitialProps = async () => {
+  const response = await axios.get('http://ingress-nginx-controller.svc.cluster.local/api/user/currentuser').catch(error => {
+    console.log('ERROR: ', error);
+    return false
+  })
+  if (typeof window === 'undefined') {
+
+  }
+
+  return {}
+}
+
+export default Home
