@@ -1,6 +1,7 @@
 import express from "express";
 import 'express-async-errors'
 import { json } from 'body-parser'
+import cors from 'cors'
 import { currentUserRoutes } from "./routes/current-user";
 import { signinRoutes } from "./routes/signin";
 import { signoutRoutes } from "./routes/signout";
@@ -21,9 +22,10 @@ declare global {
 const app = express()
 app.set('trust proxy', true) // ingress engine x
 app.use(json())
+app.use(cors())
 app.use(cookieSession({
     signed: false,
-    secure: process.env.NODE_ENV !== 'test'
+    secure: false
 }))
 
 
