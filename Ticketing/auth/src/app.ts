@@ -1,43 +1,34 @@
-import express from "express";
-import 'express-async-errors'
-import { json } from 'body-parser'
-import cors from 'cors'
-import { currentUserRoutes } from "./routes/current-user";
-import { signinRoutes } from "./routes/signin";
-import { signoutRoutes } from "./routes/signout";
-import { signupRoutes } from "./routes/signup";
-import { errorHandler } from "./middlewares/error-handler";
-import { NotFoundError } from "./errors/not-found-error";
-import cookieSession from "cookie-session";
-import { UserPayload } from "./middlewares/current-user";
+import express from 'express';
+import 'express-async-errors';
+import { json } from 'body-parser';
+import cookieSession from 'cookie-session';
 
-declare global {
-    namespace Express {
-        interface Request {
-            currentUser?: UserPayload
-        }
-    }
-}
+import { currentUserRouter } from './routes/current-user';
+import { signinRouter } from './routes/signin';
+import { signoutRouter } from './routes/signout';
+import { signupRouter } from './routes/signup';
+import { errorHandler } from './middlewares/error-handler';
+import { NotFoundError } from './errors/not-found-error';
 
-const app = express()
-app.set('trust proxy', true) // ingress engine x
-app.use(json())
-app.use(cors())
-app.use(cookieSession({
+const app = express();
+app.set('trust proxy', true);
+app.use(json());
+app.use(
+  cookieSession({
     signed: false,
-    secure: false
-}))
+    secure: process.env.NODE_ENV !== 'test'
+  })
+);
 
+app.use(currentUserRouter);
+app.use(signinRouter);
+app.use(signoutRouter);
+app.use(signupRouter);
 
-app.use(currentUserRoutes)
-app.use(signinRoutes)
-app.use(signoutRoutes)
-app.use(signupRoutes)
+app.all('*', async (req, res) => {
+  throw new NotFoundError();
+});
 
-app.all('*', async () => {
-    throw new NotFoundError()
-})
+app.use(errorHandler);
 
-app.use(errorHandler)
-
-export default app
+export { app };
