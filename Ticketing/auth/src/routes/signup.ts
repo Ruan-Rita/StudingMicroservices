@@ -2,9 +2,9 @@ import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import jwt from 'jsonwebtoken';
 
-import { validateRequest } from '../middlewares/validate-request';
+import { validateRequest } from '@sgticketing_2/common';
 import { User } from '../models/user';
-import { BadRequestError } from '../errors/bad-request-error';
+import { BadRequestError } from '@sgticketing_2/common';
 
 const router = express.Router();
 
@@ -42,9 +42,10 @@ router.post(
     );
 
     // Store it on session object
-    req.session = {
-      jwt: userJwt
-    };
+    // res.session = {
+    //   jwt: userJwt
+    // };
+    res.cookie('jwt', userJwt)
 
     res.status(201).send(user);
   }

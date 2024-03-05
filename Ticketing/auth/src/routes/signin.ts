@@ -4,8 +4,8 @@ import jwt from 'jsonwebtoken';
 
 import { Password } from '../services/password';
 import { User } from '../models/user';
-import { validateRequest } from '../middlewares/validate-request';
-import { BadRequestError } from '../errors/bad-request-error';
+import { validateRequest } from '@sgticketing_2/common';
+import { BadRequestError } from '@sgticketing_2/common';
 
 const router = express.Router();
 
@@ -47,9 +47,7 @@ router.post(
     );
 
     // Store it on session object
-    req.session = {
-      jwt: userJwt
-    };
+    res.cookie('jwt', userJwt)
 
     res.status(200).send(existingUser);
   }
