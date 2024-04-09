@@ -4,31 +4,56 @@ deploy:
   kubectl:
     manifests:
       - ./infra/k8s/*
+      - ./infra/k8s-dev/*
 build:
   local:
     push: false
   artifacts:
-    - image: ruanritah/ticketing-auth
+    - image: rallycoding/auth
       context: auth
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: "src/**/*.ts"
+          - src: 'src/**/*.ts'
             dest: .
-    - image: ruanritah/client
+    - image: rallycoding/ticketing-client
       context: client
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: "**/*.ts"
+          - src: '**/*.js'
             dest: .
-    - image: ruanritah/ticketing-tickets
+    - image: rallycoding/tickets
       context: tickets
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: "**/*.ts"
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: rallycoding/orders
+      context: orders
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: rallycoding/expiration
+      context: expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: rallycoding/payments
+      context: payments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
             dest: .

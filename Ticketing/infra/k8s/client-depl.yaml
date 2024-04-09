@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: ruanritah/client
+          image: rallycoding/ticketing-client
 ---
 apiVersion: v1
 kind: Service
@@ -25,6 +25,6 @@ spec:
     app: client
   ports:
     - name: client
-      port: 3000
       protocol: TCP
+      port: 3000
       targetPort: 3000

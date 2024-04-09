@@ -14,25 +14,21 @@ spec:
     spec:
       containers:
         - name: auth
-          image: ruanritah/ticketing-auth
+          image: rallycoding/auth
           env:
+            - name: MONGO_URI
+              value: 'mongodb://auth-mongo-srv:27017/auth'
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_KEY
-            - name: MONGO_URI
-              value: "mongodb://auth-mongo-srv:27017/auth"
-          ports:
-            - containerPort: 3000
-              protocol: TCP
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: auth-srv
 spec:
-  # type: NodePort
   selector:
     app: auth
   ports:

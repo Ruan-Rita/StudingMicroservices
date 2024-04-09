@@ -14,25 +14,29 @@ spec:
     spec:
       containers:
         - name: tickets
-          image: ruanritah/ticketing-tickets
+          image: rallycoding/tickets
           env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: 'http://nats-srv:4222'
+            - name: NATS_CLUSTER_ID
+              value: ticketing
+            - name: MONGO_URI
+              value: 'mongodb://tickets-mongo-srv:27017/tickets'
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_KEY
-            - name: MONGO_URI
-              value: "mongodb://tickets-mongo-srv:27017/tickets"
-          ports:
-            - containerPort: 3000
-              protocol: TCP
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: tickets-srv
 spec:
-  # type: NodePort
   selector:
     app: tickets
   ports:

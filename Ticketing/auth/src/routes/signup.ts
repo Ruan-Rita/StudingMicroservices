@@ -1,10 +1,9 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import jwt from 'jsonwebtoken';
+import { validateRequest, BadRequestError } from '@rallycoding/common';
 
-import { validateRequest } from '@sgticketing_2/common';
 import { User } from '../models/user';
-import { BadRequestError } from '@sgticketing_2/common';
 
 const router = express.Router();
 
@@ -42,10 +41,9 @@ router.post(
     );
 
     // Store it on session object
-    // res.session = {
-    //   jwt: userJwt
-    // };
-    res.cookie('jwt', userJwt)
+    req.session = {
+      jwt: userJwt
+    };
 
     res.status(201).send(user);
   }
