@@ -1,6 +1,8 @@
 name: ticketing-test-auth
 on:
-  pull_request
+  pull_request:
+    paths:
+      - 'Ticketing/auth/**'
 jobs:
   build:
     runs-on: ubuntu-latest
